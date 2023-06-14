@@ -1,12 +1,12 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Copyright © 2023 David Ko <davidsj.ko@gmail.com>
 
 */
 /*
 	Project: Command-Line Weather Application
 
 	This application will take a location as input and return the current weather for that location.
-	You can use a free weather API like OpenWeatherMap or Weatherstack to fetch the weather data.
+	You can use a free weather API like Weatherstack to fetch the weather data.
 
 	Here are the steps you could follow:
 
