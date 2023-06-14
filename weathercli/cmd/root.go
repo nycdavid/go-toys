@@ -4,6 +4,10 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+	"io"
+	"log"
+	"net/http"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -23,7 +27,23 @@ var rootCmd = &cobra.Command{
 `,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		url := fmt.Sprintf(
+			"http://api.weatherstack.com/current?access_key=%s&query=%s",
+			os.Getenv("WEATHERSTACK_API_KEY"),
+			args[0],
+		)
+
+		resp, e := http.Get(url)
+		if e != nil {
+			log.Println(e)
+		}
+		defer resp.Body.Close()
+
+		body, e := io.ReadAll(resp.Body)
+
+		fmt.Println(string(body))
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
