@@ -45,10 +45,19 @@ var rootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+		units := "f"
+		metric, e := cmd.Flags().GetBool("metric")
+		if e != nil {
+			log.Fatal(e)
+		}
+		if metric {
+			units = "m"
+		}
 		url := fmt.Sprintf(
-			"http://api.weatherstack.com/current?access_key=%s&query=%s",
+			"http://api.weatherstack.com/current?access_key=%s&query=%s&units=%s",
 			os.Getenv("WEATHERSTACK_API_KEY"),
 			args[0],
+			units,
 		)
 
 		resp, e := http.Get(url)
@@ -92,4 +101,6 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	rootCmd.Flags().BoolP("metric", "m", false, "Display units in Metric")
 }
