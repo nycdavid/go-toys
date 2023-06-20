@@ -77,8 +77,8 @@ var rootCmd = &cobra.Command{
 			log.Fatal(e)
 		}
 
-		fmt.Println(data)
 		fmt.Printf("%+v\n", data)
+
 	},
 }
 
