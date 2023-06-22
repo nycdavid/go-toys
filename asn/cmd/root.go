@@ -27,7 +27,7 @@ to quickly create a Cobra application.`,
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		token := os.Getenv("TOKEN")
-		baseUrl := "https://app.asana.com/api/1.0"
+		baseUrl := os.Getenv("BASE_URL")
 		taskId := args[0]
 
 		url := fmt.Sprintf("%s/tasks/%s/subtasks", baseUrl, taskId)

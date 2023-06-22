@@ -23,24 +23,6 @@
       "name": "Why doesn't `l open` work?",
       "resource_type": "task",
       "resource_subtype": "default_task"
-    },
-    {
-      "gid": "1204862580",
-      "name": "Click around the application, once I can get access to it",
-      "resource_type": "task",
-      "resource_subtype": "default_task"
-    },
-    {
-      "gid": "2995254582",
-      "name": "Once namespaces are in usw1, put the integration environment into its own namespace and test to see if it can still talk to RRH",
-      "resource_type": "task",
-      "resource_subtype": "default_task"
-    },
-    {
-      "gid": "1204864581",
-      "name": "Migrate l prod to ns: true",
-      "resource_type": "task",
-      "resource_subtype": "default_task"
     }
   ]
 }
