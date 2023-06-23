@@ -16,7 +16,7 @@ func TestRootCommand(t *testing.T) {
 		2. Set mock response for http request
 	*/
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		content, e := os.ReadFile("./cmd/testdata/tasks-subtasks-response.json")
+		content, e := os.ReadFile("testdata/task-subtasks-response.json")
 		if e != nil {
 			log.Fatal(e)
 		}
@@ -31,20 +31,15 @@ func TestRootCommand(t *testing.T) {
 	}{
 		{
 			name: "Happy path",
-			expected: `
-- Is Rails caching with memcached correctly? Test the connection (somehow)
+			expected: `- Is Rails caching with memcached correctly? Test the connection (somehow)
 - Are Sidekiq and sessions talking to Redis correctly? Test the connection (somehow)
 - Verify that virus scanning still works across namespaces
-- Why doesn't l open work?"
+- Why doesn't l open work?
 `,
 		},
-		//{
-		//	name:     "handle backticks in response",
-		//	expected: "",
-		//},
 	}
 
-	for _, tc := range tests {
+	for i, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			buf := bytes.Buffer{}
 
@@ -53,7 +48,11 @@ func TestRootCommand(t *testing.T) {
 
 			rootCmd.Execute()
 
-			fmt.Println(buf.String())
+			got := buf.String()
+
+			if tc.expected != got {
+				t.Errorf("[%d]: Expected %s, got %s", i+1, tc.expected, got)
+			}
 		})
 	}
 }

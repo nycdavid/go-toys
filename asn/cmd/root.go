@@ -4,6 +4,8 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -51,7 +53,17 @@ to quickly create a Cobra application.`,
 			log.Fatal(e)
 		}
 
-		fmt.Println(string(body))
+		var tasks map[string][]map[string]string
+		json.Unmarshal(body, &tasks)
+
+		buf := bytes.Buffer{}
+		for _, task := range tasks["data"] {
+			line := fmt.Sprintf("- %s\n", task["name"])
+			buf.WriteString(line)
+		}
+
+		w := cmd.OutOrStdout()
+		w.Write(buf.Bytes())
 	},
 }
 
