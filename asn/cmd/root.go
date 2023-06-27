@@ -28,6 +28,15 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+
+	},
+}
+
+var taskCmd = &cobra.Command{
+	Use:   "task",
+	Short: "Query for Asana tasks",
+	Long:  "[TBD]",
+	Run: func(cmd *cobra.Command, args []string) {
 		token := os.Getenv("TOKEN")
 		baseUrl := os.Getenv("BASE_URL")
 		taskId := args[0]
@@ -64,14 +73,6 @@ to quickly create a Cobra application.`,
 
 		w := cmd.OutOrStdout()
 		w.Write(buf.Bytes())
-	},
-}
-
-var taskCmd = &cobra.Command{
-	Use:   "task",
-	Short: "Query for Asana tasks",
-	Long:  "[TBD]",
-	Run: func(cmd *cobra.Command, args []string) {
 	},
 }
 

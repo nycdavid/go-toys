@@ -10,20 +10,22 @@ import (
 	"testing"
 )
 
-func TestRootCommand(t *testing.T) {
-	/*
-		1. Set output buffer for command
-		2. Set mock response for http request
-	*/
+func TestTaskCommand(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		content, e := os.ReadFile("testdata/task-subtasks-response.json")
 		if e != nil {
 			log.Fatal(e)
 		}
-		fmt.Fprint(w, string(content))
+		_, e = fmt.Fprint(w, string(content))
+		if e != nil {
+			log.Fatal(e)
+		}
 	}))
 	defer server.Close()
-	os.Setenv("BASE_URL", server.URL)
+	e := os.Setenv("BASE_URL", server.URL)
+	if e != nil {
+		log.Fatal(e)
+	}
 
 	tests := []struct {
 		name     string
@@ -44,9 +46,12 @@ func TestRootCommand(t *testing.T) {
 			buf := bytes.Buffer{}
 
 			rootCmd.SetOut(&buf)
-			rootCmd.SetArgs([]string{"12345"})
+			rootCmd.SetArgs([]string{"task", "12345"})
 
-			rootCmd.Execute()
+			e = rootCmd.Execute()
+			if e != nil {
+				log.Fatal(e)
+			}
 
 			got := buf.String()
 
